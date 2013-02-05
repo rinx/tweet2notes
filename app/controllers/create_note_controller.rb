@@ -30,7 +30,7 @@ class CreateNoteController < ApplicationController
 
     note_store.createNote(note)
 
-    redirect_to '/'
+    redirect_to root_url, :notice => "a New Note Created in your Evernote!!"
 
   end
 end
