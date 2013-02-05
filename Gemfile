@@ -51,3 +51,5 @@ gem 'evernote_oauth'
 gem 'omniauth-evernote'
 
 gem 'twitter-bootstrap-rails'
+gem 'therubyracer'
+gem 'less-rails'
