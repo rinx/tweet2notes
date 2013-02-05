@@ -19,7 +19,7 @@ class CreateNoteController < ApplicationController
     end
 
     note = Evernote::EDAM::Type::Note.new
-    note.title = "@" + Twitter.user + "'s tweets " + Twitter.user_timeline(Twitter.user).first.created_at.strftime("%y/%m/%d")
+    note.title = "@" + Twitter.user_timeline(Twitter.user).first.user.screen_name + "'s tweets " + Twitter.user_timeline(Twitter.user).first.created_at.strftime("%y/%m/%d")
 
     contentHeader = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>'
     contentFooter = '</en-note>'
