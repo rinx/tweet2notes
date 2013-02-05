@@ -1,13 +1,33 @@
 <div class="hero-unit">
-  <h1>Get your Tweets!</h1>
+  <h1>Get Your Tweets!</h1>
 
-  <p>This application creates a new note in your evernote account, and copy your tweets in it.</p>
+  <p><small>
+    tweet2notesはあなたのTwitterアカウントのツイートから最新20件をEvernoteの新規ノートとして保存します。(暫定的仕様)<br />
+    将来的には1日のツイートを1つのノートとして自動的に保存する仕様になります。
+  </small></p>
   
-  <p><a href="./auth/twitter" class="btn btn-info">twitter-OAuth</a><br />
-  <a href="./login/twLogout" class="btn btn-info">twitter-Logout</a></p>
+  <p>
+    <% if session[:twtoken] == nil then %>
+      <a href="./auth/twitter" class="btn btn-info">Twitter-OAuth &raquo;</a>
+    <% else %>
+      <a href="./login/twLogout" class="btn btn-info">Twitter-Logout</a>
+    <% end %>
+  </p>
   
-  <p><a href="./auth/evernote" class="btn btn-success">evernote-OAuth</a><br />
-  <a href="./login/enLogout" class="btn btn-success">evernote-Logout</a><br /></p>
+  <p>
+    <% if session[:entoken] == nil then %>
+      <a href="./auth/evernote" class="btn btn-success">Evernote-OAuth &raquo;</a>
+    <% else %>
+      <a href="./login/enLogout" class="btn btn-success">Evernote-Logout</a>
+    <% end %>
+  </p>
   
-  <p><a href="./create_note/create" class="btn btn-primary btn-large">create a note &raquo;</a></p>
+  <p>
+    <% if session[:twtoken] != nil and session[:entoken] != nil then %>
+      <a href="./create_note/create" class="btn btn-primary btn-large">Create a Note &raquo;</a>
+    <% else %>
+      <a href="#" class="btn btn-primary btn-large disabled">Create a Note &raquo;</a>
+    <% end %>
+  </p>
+
 </div>
