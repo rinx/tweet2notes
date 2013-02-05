@@ -36,3 +36,13 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'omniauth'
+
+gem 'twitter'
+gem 'omniauth-twitter'
+
+gem 'evernote'
+gem 'evernote_oauth'
+gem 'omniauth-evernote'
+

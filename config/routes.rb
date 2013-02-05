@@ -1,4 +1,20 @@
 Tweet2notes::Application.routes.draw do
+  get "create_note/create"
+
+  get "login/twCallback"
+
+  get "login/enCallback"
+
+  get "login/twLogout"
+
+  get "login/enLogout"
+
+  get "contents/index"
+  root :to => "contents#index"
+
+  match 'auth/twitter/callback' => 'login#twCallback'
+  match 'auth/evernote/callback' => 'login#enCallback'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
