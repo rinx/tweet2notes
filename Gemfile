@@ -6,9 +6,9 @@ gem 'rails', '3.2.11'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # for heroku, sqlite3 cannot run
-group :production do
+#group :production do
   gem 'pg'
-end
+#end
 
 group :development do
   gem 'sqlite3'
