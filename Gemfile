@@ -50,3 +50,4 @@ gem 'evernote'
 gem 'evernote_oauth'
 gem 'omniauth-evernote'
 
+gem 'twitter-bootstrap-rails'
