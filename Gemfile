@@ -6,7 +6,9 @@ gem 'rails', '3.2.11'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # for heroku, sqlite3 cannot run
-gem 'pg'
+group :production do
+  gem 'pg'
+end
 
 group :development do
   gem 'sqlite3'
@@ -51,5 +53,5 @@ gem 'evernote_oauth'
 gem 'omniauth-evernote'
 
 gem 'twitter-bootstrap-rails'
-gem 'therubyracer'
 gem 'less-rails'
+gem 'therubyracer'
