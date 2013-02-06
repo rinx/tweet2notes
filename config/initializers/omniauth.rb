@@ -1,5 +1,5 @@
 enconfig = YAML.load(ERB.new(File.read('config/evernote.yml')).result)[Rails.env]
-site = enconfig['sandbox'] ? 'https://sandbox.evernote.com' : 'https://evernote.com'
+site = enconfig['sandbox'] ? 'https://sandbox.evernote.com' : 'https://www.evernote.com'
 twconfig = YAML.load(ERB.new(File.read('config/twitter.yml')).result)[Rails.env]
 
 Rails.application.config.middleware.use OmniAuth::Builder do
