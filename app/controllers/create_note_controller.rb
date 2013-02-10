@@ -11,15 +11,23 @@ class CreateNoteController < ApplicationController
 
     tweets = ""
 
-    Twitter.user_timeline(Twitter.user).each do |tl|
-      tweets += "@" + tl.user.screen_name + " "
-      tweets += tl.created_at.strftime("[%y/%m/%d %H:%M:%S]") + "<br/>"
-      tweets += tl.text + "<br/>"
-      tweets += "via " + tl.source + "<br/><br/>"
+    yesterday = Date.today.yesterday
+
+    Twitter.user_timeline(Twitter.user, {:conut => 200}).each do |tl|
+      
+      if ( yesterday.year == tl.created_at.year &&
+           yesterday.month == tl.created_at.month &&
+           yesterday.day == tl.created_at.day ) then
+        tweets += "@" + tl.user.screen_name + " "
+        tweets += tl.created_at.strftime("[%y/%m/%d %H:%M:%S]") + "<br/>"
+        tweets += tl.text + "<br/>"
+        tweets += "via " + tl.source + "<br/><br/>"
+      end
+
     end
 
     note = Evernote::EDAM::Type::Note.new
-    note.title = "@" + Twitter.user_timeline(Twitter.user).first.user.screen_name + "'s tweets " + Twitter.user_timeline(Twitter.user).first.created_at.strftime("%y/%m/%d")
+    note.title = "@" + Twitter.user_timeline(Twitter.user).first.user.screen_name + "'s tweets " + yesterday.strftime("%y/%m/%d")
 
     contentHeader = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>'
     contentFooter = '</en-note>'
