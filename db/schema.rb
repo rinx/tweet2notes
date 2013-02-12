@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20130212085129) do
   create_table "users", :force => true do |t|
     t.string   "tw_token"
     t.string   "tw_secret"
-    t.string   "en_secret"
+    t.string   "en_token"
     t.string   "notebook"
     t.string   "tags"
     t.date     "updated_at", :null => false
