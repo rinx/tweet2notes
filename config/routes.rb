@@ -1,4 +1,8 @@
 Tweet2notes::Application.routes.draw do
+  get "parameter/input"
+
+  get "parameter/register"
+
   get "create_note/create"
 
   get "login/twCallback"
