@@ -12,5 +12,13 @@ class ParameterController < ApplicationController
   end
 
   def register
+    
+    User.create(:tw_token => session[:twtoken], 
+                :tw_secret => session[:twsecret],
+                :en_token => session[:entoken],
+                :notebook => notebook,
+                :tags => tags,
+                :updated_at => Time.now)
+                
   end
 end
