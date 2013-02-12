@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tw_token: MyString
+  tw_secret: MyString
+  en_secret: MyString
+  notebook: MyString
+  tags: MyString
+  updated_at: 2013-02-12
+
+two:
+  tw_token: MyString
+  tw_secret: MyString
+  en_secret: MyString
+  notebook: MyString
+  tags: MyString
+  updated_at: 2013-02-12
