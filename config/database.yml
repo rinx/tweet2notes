@@ -19,7 +19,10 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
-  timeout: 5000
+  encoding: unicode
+  adapter: postgresql
+  username: mutnodezksxltb
+  port: 5432
+  host: ec2-54-243-181-115.compute-1.amazonaws.com
+  database: da4dgn7fjcp6tf
+  password: <%= ENV['HEROKU_DB_PW'] %>
