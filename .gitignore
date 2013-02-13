@@ -15,6 +15,7 @@
 /tmp
 
 /exec.sh
+/rakeexec.sh
 
 #Ignore vim swap
 *.swp
