@@ -41,7 +41,7 @@ task :create_notes => :environment do
 
     note.content = contentHeader.force_encoding('ASCII-8BIT') + tweets.force_encoding('ASCII-8BIT') + contentFooter.force_encoding('ASCII-8BIT')
 
-#    note.tagNames = [usr[:tag_names]]
+    note.tagNames = [usr[:tags]]
 
     note_store.createNote(note)
 
