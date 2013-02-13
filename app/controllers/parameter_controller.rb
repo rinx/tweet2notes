@@ -20,5 +20,7 @@ class ParameterController < ApplicationController
                 :tags => params[:tag_names],
                 :updated_at => Time.now)
                 
+    redirect_to root_url, :notice => 'your token is registered!!'
+
   end
 end
