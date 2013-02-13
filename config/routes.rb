@@ -19,6 +19,9 @@ Tweet2notes::Application.routes.draw do
   match 'auth/twitter/callback' => 'login#twCallback'
   match 'auth/evernote/callback' => 'login#enCallback'
 
+  get 'auth/twitter'
+  get 'auth/evernote'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
