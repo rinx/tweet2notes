@@ -8,25 +8,25 @@
   
   <p>
     <% if session[:twtoken] == nil then %>
-      <a href="./auth/twitter" class="btn btn-info">Twitter-OAuth &raquo;</a>
+      <%= link_to 'Twitter Authorize &raquo;'.html_safe, auth_twitter_path, :class => 'btn btn-info' %>
     <% else %>
-      <a href="./login/twLogout" class="btn btn-info">Twitter-Logout</a>
+      <%= link_to 'Twitter Logout', login_twLogout_path, :class => 'btn btn-info' %>
     <% end %>
   </p>
   
   <p>
     <% if session[:entoken] == nil then %>
-      <a href="./auth/evernote" class="btn btn-success">Evernote-OAuth &raquo;</a>
+      <%= link_to 'Evernote Authorize &raquo;'.html_safe, auth_evernote_path, :class => 'btn btn-success' %>
     <% else %>
-      <a href="./login/enLogout" class="btn btn-success">Evernote-Logout</a>
+      <%= link_to 'Evernote Logout', login_enLogout_path, :class => 'btn btn-success' %>
     <% end %>
   </p>
   
   <p>
     <% if session[:twtoken] != nil and session[:entoken] != nil then %>
-      <a href="./parameter/input" class="btn btn-primary btn-large">Next Step &raquo;</a>
+      <%= link_to 'NextStep &raquo;'.html_safe, parameter_input_path, :class => 'btn btn-primary btn-large' %>
     <% else %>
-      <a href="#" class="btn btn-primary btn-large disabled">Next Step &raquo;</a>
+      <%= link_to 'NextStep &raquo;'.html_safe, '#', :class => 'btn btn-primary btn-large disabled' %>
     <% end %>
   </p>
 

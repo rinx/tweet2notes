@@ -16,8 +16,8 @@ class ParameterController < ApplicationController
     User.create(:tw_token => session[:twtoken], 
                 :tw_secret => session[:twsecret],
                 :en_token => session[:entoken],
-                :notebook => notebook,
-                :tags => tags,
+                :notebook => params[:notebook_name],
+                :tags => params[:tag_names],
                 :updated_at => Time.now)
                 
   end

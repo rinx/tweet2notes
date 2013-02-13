@@ -1,7 +1,7 @@
 Tweet2notes::Application.routes.draw do
   get "parameter/input"
 
-  get "parameter/register"
+  post "parameter/register" => "parameter#register"
 
   get "create_note/create"
 
