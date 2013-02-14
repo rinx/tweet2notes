@@ -9,7 +9,7 @@
 
     <label>tags</label>
     <%= text_field_tag 'tag_names' %>
-    <small class="help-block">ノートに付けるタグを指定してください。</small>
+    <small class="help-block">ノートに付けるタグを指定してください。(","で区切って複数指定できます。)</small>
 
     <%= link_to '&laquo; back'.html_safe, root_path, :class => 'btn' %>
     <%= submit_tag 'register &raquo;'.html_safe, :class => 'btn btn-primary' %>
