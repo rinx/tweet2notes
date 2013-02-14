@@ -41,7 +41,9 @@ task :create_notes => :environment do
 
     note.content = contentHeader.force_encoding('ASCII-8BIT') + tweets.force_encoding('ASCII-8BIT') + contentFooter.force_encoding('ASCII-8BIT')
 
-    note.tagNames = [usr[:tags]]
+    if (usr[:tags] != nil) then
+      note.tagNames = usr[:tags].split(/\s*,\s*/)
+    end
 
     note_store.createNote(note)
 
