@@ -6,60 +6,72 @@ task :create_notes => :environment do
 
   User.find(:all).each do |usr|
 
-    Twitter.configure do |config|
-      config.consumer_key = ENV['TW_CONSUMER_KEY']
-      config.consumer_secret = ENV['TW_CONSUMER_SECRET']
-      config.oauth_token = usr[:tw_token]
-      config.oauth_token_secret = usr[:tw_secret]
-    end
+    begin
 
-    enClient = EvernoteOAuth::Client.new(token: usr[:en_token])
-    note_store = enClient.note_store
-
-    tweets = ""
-
-    yesterday = Date.today.yesterday
-
-    Twitter.user_timeline(Twitter.user, {:count => 200}).each do |tl|
-
-      if ( yesterday.year == tl.created_at.year &&
-           yesterday.month == tl.created_at.month &&
-           yesterday.day == tl.created_at.day ) then
-        tweets += "@" + tl.user.screen_name + " "
-        tweets += tl.created_at.strftime("[%y/%m/%d %H:%M:%S]") + "<br/>"
-        tweets += tl.text + "<br/>"
-        tweets += "via " + tl.source + "<br/><br/>"
+      Twitter.configure do |config|
+        config.consumer_key = ENV['TW_CONSUMER_KEY']
+        config.consumer_secret = ENV['TW_CONSUMER_SECRET']
+        config.oauth_token = usr[:tw_token]
+        config.oauth_token_secret = usr[:tw_secret]
       end
 
-    end
+      enClient = EvernoteOAuth::Client.new(token: usr[:en_token])
+      note_store = enClient.note_store
 
-    note = Evernote::EDAM::Type::Note.new
-    note.title = "@" + Twitter.user_timeline(Twitter.user).first.user.screen_name + "'s tweets " + yesterday.strftime("%y/%m/%d")
+      tweets = ""
 
-    contentHeader = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>'
-    contentFooter = '</en-note>'
+      yesterday = Date.today.yesterday
 
-    note.content = contentHeader.force_encoding('ASCII-8BIT') + tweets.force_encoding('ASCII-8BIT') + contentFooter.force_encoding('ASCII-8BIT')
+      Twitter.user_timeline(Twitter.user, {:count => 200}).each do |tl|
 
-    if ( usr[:notebook] != "" ) then
-      notebook = note_store.listNotebooks.select {|notebook| notebook.name == usr[:notebook]}.first
-      if notebook.present?
-        notebook_guid = notebook.guid
-      else
-        notebook = Evernote::EDAM::Type::Notebook.new
-        notebook.name = usr[:notebook]
-        notebook_guid = note_store.createNotebook(notebook).guid
+        if ( yesterday.year == tl.created_at.year &&
+             yesterday.month == tl.created_at.month &&
+             yesterday.day == tl.created_at.day ) then
+          tweets += "@" + tl.user.screen_name + " "
+          tweets += tl.created_at.strftime("[%y/%m/%d %H:%M:%S]") + "<br/>"
+          tweets += tl.text + "<br/>"
+          tweets += "via " + tl.source + "<br/><br/>"
+        end
+
       end
-      note.notebookGuid = notebook_guid
-    end
 
-    if ( usr[:tags] != "" ) then
-      note.tagNames = usr[:tags].split(/\s*,\s*/)
-    end
+      note = Evernote::EDAM::Type::Note.new
+      note.title = "@" + Twitter.user_timeline(Twitter.user).first.user.screen_name + "'s tweets " + yesterday.strftime("%y/%m/%d")
 
-    note_store.createNote(note)
+      contentHeader = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>'
+      contentFooter = '</en-note>'
+
+      note.content = contentHeader.force_encoding('ASCII-8BIT') + tweets.force_encoding('ASCII-8BIT') + contentFooter.force_encoding('ASCII-8BIT')
+
+      if ( usr[:notebook] != "" ) then
+        notebook = note_store.listNotebooks.select {|notebook| notebook.name == usr[:notebook]}.first
+        if notebook.present?
+          notebook_guid = notebook.guid
+        else
+          notebook = Evernote::EDAM::Type::Notebook.new
+          notebook.name = usr[:notebook]
+          notebook_guid = note_store.createNotebook(notebook).guid
+        end
+        note.notebookGuid = notebook_guid
+      end
+
+      if ( usr[:tags] != "" ) then
+        note.tagNames = usr[:tags].split(/\s*,\s*/)
+      end
+
+      note_store.createNote(note)
+
+      usr.touch
+
+    rescue
+      
+      puts "An Error occured at the data of #{usr[:id]}"
+      
+    end
 
   end
+
+  User.delete_all(["updated_at < ?", 7.day.ago])
 
   puts "create_notes done."
 
