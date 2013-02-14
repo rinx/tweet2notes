@@ -41,7 +41,19 @@ task :create_notes => :environment do
 
     note.content = contentHeader.force_encoding('ASCII-8BIT') + tweets.force_encoding('ASCII-8BIT') + contentFooter.force_encoding('ASCII-8BIT')
 
-    if (usr[:tags] != nil) then
+    if ( usr[:notebook] != "" ) then
+      notebook = note_store.listNotebooks.select {|notebook| notebook.name == usr[:notebook]}.first
+      if notebook.present?
+        notebook_guid = notebook.guid
+      else
+        notebook = Evernote::EDAM::Type::Notebook.new
+        notebook.name = usr[:notebook]
+        notebook_guid = note_store.createNotebook(notebook).guid
+      end
+      note.notebookGuid = notebook_guid
+    end
+
+    if ( usr[:tags] != "" ) then
       note.tagNames = usr[:tags].split(/\s*,\s*/)
     end
 
