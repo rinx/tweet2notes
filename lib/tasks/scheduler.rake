@@ -20,17 +20,34 @@ task :create_notes => :environment do
 
       tweets = ""
 
+      yesterdayTweetFlag= 1
+      lastID = Twitter.user_timeline(Twitter.user).first.id
+
       yesterday = Date.today.yesterday
 
-      Twitter.user_timeline(Twitter.user, {:count => 200}).each do |tl|
+      while (yesterdayTweetFlag == 1) do
 
-        if ( yesterday.year == tl.created_at.year &&
-             yesterday.month == tl.created_at.month &&
-             yesterday.day == tl.created_at.day ) then
-          tweets += "@" + tl.user.screen_name + " "
-          tweets += tl.created_at.strftime("[%y/%m/%d %H:%M:%S]") + "<br/>"
-          tweets += tl.text + "<br/>"
-          tweets += "via " + tl.source + "<br/><br/>"
+        i = 1
+
+        Twitter.user_timeline(Twitter.user, {:count => 200, :max_id => lastID}).each do |tl|
+
+          unless (i == 200) then 
+            if ( yesterday.year == tl.created_at.year &&
+                 yesterday.month == tl.created_at.month &&
+                 yesterday.day == tl.created_at.day ) then
+              tweets += "@" + tl.user.screen_name + " "
+              tweets += tl.created_at.strftime("[%y/%m/%d %H:%M:%S]") + "<br/>"
+              tweets += tl.text + "<br/>"
+              tweets += "via " + tl.source + "<br/><br/>"
+              yesterdayTweetFlag = 1
+            else
+              yesterdayTweetFlag = 0
+            end
+            i += 1
+          else  
+            lastID = tl.id
+          end
+
         end
 
       end
