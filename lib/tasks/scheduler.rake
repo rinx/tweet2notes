@@ -78,9 +78,9 @@ task :create_notes => :environment do
         end
 
         note_store.createNote(note)
-
-        usr.touch
       end
+
+      usr.touch
 
     rescue
       
