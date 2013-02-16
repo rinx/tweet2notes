@@ -52,33 +52,35 @@ task :create_notes => :environment do
 
       end
 
-      note = Evernote::EDAM::Type::Note.new
-      note.title = "@" + Twitter.user_timeline(Twitter.user).first.user.screen_name + "'s tweets " + yesterday.strftime("%y/%m/%d")
+      unless (tweets == "") then
+        note = Evernote::EDAM::Type::Note.new
+        note.title = "@" + Twitter.user_timeline(Twitter.user).first.user.screen_name + "'s tweets " + yesterday.strftime("%y/%m/%d")
 
-      contentHeader = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>'
-      contentFooter = '</en-note>'
+        contentHeader = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>'
+        contentFooter = '</en-note>'
 
-      note.content = contentHeader.force_encoding('ASCII-8BIT') + tweets.force_encoding('ASCII-8BIT') + contentFooter.force_encoding('ASCII-8BIT')
+        note.content = contentHeader.force_encoding('ASCII-8BIT') + tweets.force_encoding('ASCII-8BIT') + contentFooter.force_encoding('ASCII-8BIT')
 
-      if ( usr[:notebook] != "" ) then
-        notebook = note_store.listNotebooks.select {|notebook| notebook.name == usr[:notebook]}.first
-        if notebook.present?
-          notebook_guid = notebook.guid
-        else
-          notebook = Evernote::EDAM::Type::Notebook.new
-          notebook.name = usr[:notebook]
-          notebook_guid = note_store.createNotebook(notebook).guid
+        if ( usr[:notebook] != "" ) then
+          notebook = note_store.listNotebooks.select {|notebook| notebook.name == usr[:notebook]}.first
+          if notebook.present?
+            notebook_guid = notebook.guid
+          else
+            notebook = Evernote::EDAM::Type::Notebook.new
+            notebook.name = usr[:notebook]
+            notebook_guid = note_store.createNotebook(notebook).guid
+          end
+          note.notebookGuid = notebook_guid
         end
-        note.notebookGuid = notebook_guid
+
+        if ( usr[:tags] != "" ) then
+          note.tagNames = usr[:tags].split(/\s*,\s*/)
+        end
+
+        note_store.createNote(note)
+
+        usr.touch
       end
-
-      if ( usr[:tags] != "" ) then
-        note.tagNames = usr[:tags].split(/\s*,\s*/)
-      end
-
-      note_store.createNote(note)
-
-      usr.touch
 
     rescue
       
