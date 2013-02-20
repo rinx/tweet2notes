@@ -11,17 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212085129) do
+ActiveRecord::Schema.define(:version => 20130220162031) do
 
-  create_table "users", :force => true do |t|
-    t.string   "tw_token"
-    t.string   "tw_secret"
-    t.string   "en_token"
-    t.string   "notebook"
-    t.string   "tags"
-    t.boolean  "tweeting"
-    t.date     "updated_at", :null => false
-    t.datetime "created_at", :null => false
-  end
+# Could not dump table "users" because of following StandardError
+#   Unknown type 'bit' for column 'tweeting'
 
 end
