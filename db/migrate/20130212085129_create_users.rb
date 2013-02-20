@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :en_token
       t.string :notebook
       t.string :tags
+      t.boolean :tweeting
       t.date :updated_at
 
       t.timestamps
