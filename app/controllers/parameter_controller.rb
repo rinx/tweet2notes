@@ -18,6 +18,7 @@ class ParameterController < ApplicationController
                 :en_token => session[:entoken],
                 :notebook => params[:notebook_name],
                 :tags => params[:tag_names],
+                :tweet => params[:tweet],
                 :updated_at => Time.now)
                 
     redirect_to root_url, :notice => 'your token is registered!!'

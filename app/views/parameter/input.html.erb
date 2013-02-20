@@ -11,6 +11,10 @@
     <%= text_field_tag 'tag_names' %>
     <small class="help-block">ノートに付けるタグを指定してください。(","で区切って複数指定できます。)</small>
 
+    <label>tweet</label>
+    <%= check_box_tag 'tweet' %><small>ノート作成時に通知をする</small>
+    <small class="help-block">ノートを作成したことをツイートにより通知します。</small>
+
     <%= link_to '&laquo; back'.html_safe, root_path, :class => 'btn' %>
     <%= submit_tag 'register &raquo;'.html_safe, :class => 'btn btn-primary' %>
 

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 desc "This task is called by the Heroku scheduler add-on"
 
 task :create_notes => :environment do
@@ -19,9 +21,12 @@ task :create_notes => :environment do
       note_store = enClient.note_store
 
       tweets = ""
+      tweetCount = 0
 
       yesterdayTweetFlag= 1
       lastID = Twitter.user_timeline(Twitter.user).first.id
+
+      screenName = Twitter.user_timeline(Twitter.user).first.user.screen_name
 
       yesterday = Date.today.yesterday
 
@@ -39,6 +44,7 @@ task :create_notes => :environment do
               tweets += tl.created_at.strftime("[%y/%m/%d %H:%M:%S]") + "<br/>"
               tweets += tl.text + "<br/>"
               tweets += "via " + tl.source + "<br/><br/>"
+              tweetCount += 1
               yesterdayTweetFlag = 1
             else
               yesterdayTweetFlag = 0
@@ -54,7 +60,7 @@ task :create_notes => :environment do
 
       unless (tweets == "") then
         note = Evernote::EDAM::Type::Note.new
-        note.title = "@" + Twitter.user_timeline(Twitter.user).first.user.screen_name + "'s tweets " + yesterday.strftime("%y/%m/%d")
+        note.title = "@" + screenName + "'s tweets " + yesterday.strftime("%y/%m/%d")
 
         contentHeader = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>'
         contentFooter = '</en-note>'
@@ -78,6 +84,11 @@ task :create_notes => :environment do
         end
 
         note_store.createNote(note)
+
+        if ( usr[:tweet] == 1 ) then
+          Twitter.update("@#{screenName} #{yesterday.strftime('%y/%m/%d')}の#{tweetCount.to_s}postをEvernoteに保存しました。 #tweet2notes")
+        end
+
       end
 
       usr.touch
