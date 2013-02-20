@@ -11,9 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220085549) do
+ActiveRecord::Schema.define(:version => 20130220153621) do
 
 # Could not dump table "users" because of following StandardError
-#   Unknown type 'bit' for column 'tweet'
+#   Unknown type 'bit' for column 'tweeting'
 
 end
