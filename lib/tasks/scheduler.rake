@@ -63,7 +63,7 @@ task :create_notes => :environment do
         note.title = "@" + screenName + "'s tweets " + yesterday.strftime("%y/%m/%d")
 
         contentHeader = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">'
-        contentHeader +='<en-note>#{yesterday.strftime("%y/%m/%d")}のpost数:#{tweetCount.to_s}<br/><br/>'
+        contentHeader +="<en-note>#{yesterday.strftime('%y/%m/%d')}のpost数:#{tweetCount.to_s}<br/><br/>"
         contentFooter = '</en-note>'
 
         note.content = contentHeader.force_encoding('ASCII-8BIT') + tweets.force_encoding('ASCII-8BIT') + contentFooter.force_encoding('ASCII-8BIT')
