@@ -21,8 +21,8 @@ test:
 production:
   encoding: unicode
   adapter: postgresql
-  username: yghctonhdwemkk
+  username: mutnodezksxltb
   port: 5432
   host: ec2-54-243-181-115.compute-1.amazonaws.com
-  database: dfknlptfcmpvl9
+  database: da4dgn7fjcp6tf
   password: <%= ENV['HEROKU_DB_PW'] %>
