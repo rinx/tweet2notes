@@ -43,7 +43,9 @@ task :create_notes => :environment do
               tweets += "@" + tl.user.screen_name + " "
               tweets += tl.created_at.strftime("[%y/%m/%d %H:%M:%S]") + "<br/>"
               tweets += tl.text + "<br/>"
-              tweets += "via " + tl.source + "<br/><br/>"
+              tweets += "via " + tl.source + "<br/>"
+              tweets += "https://twitter.com/#{tl.user.screen_name}/status/#{tl.id}<br/><br/>"
+
               tweetCount += 1
               yesterdayTweetFlag = 1
             else
